@@ -1,10 +1,14 @@
 import { conexion } from "../database.js";
 
-export const getTarea=(req, res)=>{
-    res.send('creando tareas');
+export const getTarea= async (req, res)=>{
+    const id=req.params.id;
+    const [result] = await conexion.query('select * from tarea where title=?',id);
+    res.json(result);
 };
 
-export const getTareas=(req,res)=>{
+export const getTareas= async (req,res)=>{
+    const [result] = await conexion.query('select * from tarea');
+    res.json(result);
     res.send('creando tareas');
 };
 
