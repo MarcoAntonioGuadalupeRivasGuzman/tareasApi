@@ -2,11 +2,15 @@ import { conexion } from "../database.js";
 
 export const getTarea= async (req, res)=>{
     const id=req.params.id;
+    try{
     const [result] = await conexion.query('select * from tarea where id=?',id);
     if(result.length===0){
         return res.status(404).json({message: "Tarea no encontrada"});
     }
     res.json(result[0]);
+    } catch(error){
+        return res.status(500).json({message: error.message});
+    }
 };
 
 export const getTareas= async (req,res)=>{
