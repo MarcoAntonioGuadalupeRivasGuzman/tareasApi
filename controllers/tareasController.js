@@ -52,9 +52,13 @@ export const updateTarea= async (req, res)=>{
 
 export const deleteTarea= async (req, res)=>{
     const id=req.params.id;
+    try{
     const [result] = await conexion.query('delete tarea where id=?', id);
     if(result.affectedRows===0){
         return res.status(404).json({message: "Tarea no encontrada"});
     }
     return res.sendStatus(204);
+    }catch(error){
+        return res.status(500).json({message: error.message});
+    }
 };
