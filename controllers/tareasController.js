@@ -14,13 +14,17 @@ export const getTarea= async (req, res)=>{
 };
 
 export const getTareas= async (req,res)=>{
+    try{
     const [result] = await conexion.query('select * from tarea');
     res.json(result);
-    res.send('creando tareas');
+    } catch(error){
+        return res.status(500).json({message: error.message});
+    }
 };
 
 export const createTarea= async (req, res)=>{
     const {title, description}=req.body;
+    try{
     const [result] = await conexion.query('insert into tarea(title,descripcion) values(?,?)',[
         title,description
     ]);
@@ -30,6 +34,9 @@ export const createTarea= async (req, res)=>{
         title,
         description,
     });
+    }catch(error){
+        return res.status(500).json({message: error.message});
+    }
 };
 
 export const updateTarea= async (req, res)=>{
