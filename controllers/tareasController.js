@@ -42,8 +42,12 @@ export const createTarea= async (req, res)=>{
 export const updateTarea= async (req, res)=>{
     const id = req.params.id;
     const {title, description}=req.body;
+    try{
     const [result] = await conexion.query('update tarea set title=?, descripcion=? where id=?', [title,description,id]);
     res.json(result);
+    }catch(error){
+        return res.status(500).json({message: error.message});
+    }
 };
 
 export const deleteTarea= async (req, res)=>{
